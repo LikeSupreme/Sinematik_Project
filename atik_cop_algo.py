@@ -1,26 +1,29 @@
 # ATIK ÇÖP ALGORİTMASI   /   AMAÇ : ATIK ÇÖP ATTIKÇA KULLANICIYA PUAN VEREREK BELLİ BİR PUANA GELDİĞİNDE SİNEMA BİLETİ KAZANMASINI SAĞLAMAK.
 import sqlite3
 class kullanici:
+    
     bilgi = open("kullanıcı_bilgi.txt","w")
     print("\nSinematık uygulamasına hoşgeldiniz.\n")
     ad_soyad = input("Ad soyadınızı giriniz : ")
+    
     try:
         tc = int(input("T.C kimlik no giriniz : "))
         if len(str(tc)) != 11:
-            raise SystemExit("Tc no 11 haneden oluşmalı.İşleminiz iptal edildi...")     
+            raise SystemExit("Tc no 11 haneden oluşmalı.İşleminiz iptal edildi...")
     except ValueError:
         raise SystemExit("Tc no sayılardan oluşmalıdır...İşleminiz iptal edildi...")
+        
     try:
         sinema_kart = int(input("Sinema kart numaranızı giriniz : "))
         if len(str(sinema_kart)) != 6:
-            raise SystemExit("Sinema kart no 6 haneden oluşmalı.İşleminiz iptal edildi...")     
+            raise SystemExit("Sinema kart no 6 haneden oluşmalı.İşleminiz iptal edildi...")
     except ValueError:
         raise SystemExit("Sinema kart no sayılardan oluşmalıdır...İşleminiz iptal edildi...")
-
 
     print("Ad Soyad : ",ad_soyad, file = bilgi)
     print("T.C Kimlik No : ",tc, file = bilgi)
     print("Sinema Kart No :",sinema_kart, file = bilgi)
+    
 kullanici1 = kullanici()
 
 atikTurleri = {
@@ -74,6 +77,7 @@ while True:
     
     print("\n",fiyat)
     print("\n",atıkListesi)
+    
     try:
         atik_secim = int(input("\nHangi atık türünü atacağınızı seçin : "))
 
@@ -127,6 +131,7 @@ while True:
         print("Sinema Bileti Icin Gerekli Puan : ", bilet_puanı - (p1 + p2 + p3 + p4 + p5 + p6),file = bilgi)
         
         print(48*"*",file = bilgi)
+        
     except ValueError:
         print("Seçim sadece sayı girişi olmalı...Geçersiz format...")
         
@@ -152,6 +157,7 @@ baglanti = veritabani.cursor()
 baglanti.execute("CREATE TABLE IF NOT EXISTS kullanici(Ad Soyad,Tc,Sinema Kart No)")
 sorgu = "insert into kullanici VALUES (?,?,?)"
 baglanti.execute(sorgu,(kullanici1.ad_soyad,kullanici1.tc,kullanici1.sinema_kart))
+
 veritabani.commit()
 veritabani.close()
 
